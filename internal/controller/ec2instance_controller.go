@@ -18,10 +18,12 @@ package controller
 
 import (
 	"context"
+	"fmt"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+	"sigs.k8s.io/controller-runtime/pkg/log"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 
 	ec2v1alpha1 "github.com/inboxamitraj/ec2operator/api/v1alpha1"
@@ -48,6 +50,19 @@ type EC2InstanceReconciler struct {
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.23.3/pkg/reconcile
 func (r *EC2InstanceReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = logf.FromContext(ctx)
+
+	l := log.FromContext(ctx)
+
+	ec2instance := &ec2v1alpha1.EC2Instance{}
+
+	l.Info("Reconciling EC2Instance", "Name", ec2instance)
+
+	fmt.Println("I got a request for an ec2 instance in the namespace", req.NamespacedName, "ec2 instance is", ec2instance)
+
+	fmt.Println("spec of ec2 instance is: ", ec2instance.Spec)
+
+	fmt.Println("ec2 instance name is: ", ec2instance.Name)
+	fmt.Println("ec2 instance type is: ", ec2instance.Spec.Type)
 
 	// TODO(user): your logic here
 
