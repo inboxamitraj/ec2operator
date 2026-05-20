@@ -51,6 +51,8 @@ type EC2InstanceReconciler struct {
 func (r *EC2InstanceReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = logf.FromContext(ctx)
 
+	// TODO(user): your logic here
+
 	l := log.FromContext(ctx)
 
 	ec2instance := &ec2v1alpha1.EC2Instance{}
@@ -64,7 +66,7 @@ func (r *EC2InstanceReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 	fmt.Println("ec2 instance name is: ", ec2instance.Name)
 	fmt.Println("ec2 instance type is: ", ec2instance.Spec.Type)
 
-	// TODO(user): your logic here
+	l.Info("Reconciled Ec2 Instance", "Name", ec2instance.Name)
 
 	return ctrl.Result{}, nil
 }
