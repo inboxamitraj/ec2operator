@@ -1,9 +1,0 @@
-apiVersion: ec2.mycompany.io/v1alpha1
-kind: EC2Instance
-metadata:
-  name: my-ec2-instance
-  namespace: default
-spec:
-  AmiID: "ami-0abcdef1234567890"
-  Type: "t3.medium"
-  Storage: "50Gi"

@@ -40,12 +40,25 @@ spec:
             description: spec defines the desired state of EC2Instance
             properties:
               AmiID:
-                description: |-
-                  foo is an example field of EC2Instance. Edit ec2instance_types.go to remove/update
-                  Foo *string `json:"foo,omitempty"`
                 type: string
               Storage:
+                description: StorageSpec defines a storage volume attached to an EC2
+                  instance.
+                properties:
+                  size:
+                    type: integer
+                  type:
+                    type: string
+                required:
+                - size
+                - type
+                type: object
+              Subnet:
                 type: string
+              Tags:
+                additionalProperties:
+                  type: string
+                type: object
               Type:
                 type: string
             type: object

@@ -57,19 +57,26 @@ func (r *EC2InstanceReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 
 	ec2instance := &ec2v1alpha1.EC2Instance{}
 
-	l.Info("Reconciling EC2Instance", "Name", ec2instance)
+	if err := r.Get(ctx, req.NamespacedName, ec2instance); err != nil {
+		return ctrl.Result{}, client.IgnoreNotFound(err)
+	}
 
-	fmt.Println("I got a request for an ec2 instance in the namespace", req.NamespacedName, "ec2 instance is", ec2instance)
+	l.Info("Reconciling EC2Instance", "Name", ec2instance.Name)
 
-	fmt.Println("spec of ec2 instance is: ", ec2instance.Spec)
-
-	fmt.Println("ec2 instance name is: ", ec2instance.Name)
-	fmt.Println("ec2 instance type is: ", ec2instance.Spec.Type)
+	fmt.Println("I got a request for an ec2 instance in the namespace", req.NamespacedName)
+	fmt.Println("The ec2 instance name is ", ec2instance.Name)
+	fmt.Println("Instance type is ", ec2instance.Spec.Type)
+	fmt.Println("Ami ID is ", ec2instance.Spec.AmiID)
+	fmt.Println("Subnet is ", ec2instance.Spec.Subnet)
+	fmt.Println("Tags are ", ec2instance.Spec.Tags)
+	fmt.Println("Storage is", ec2instance.Spec.Storage.Size, "GB", "and type is", ec2instance.Spec.Storage.Type)
 
 	l.Info("Reconciled Ec2 Instance", "Name", ec2instance.Name)
 
 	return ctrl.Result{}, nil
-}
+	
+	}
+
 
 // SetupWithManager sets up the controller with the Manager.
 func (r *EC2InstanceReconciler) SetupWithManager(mgr ctrl.Manager) error {

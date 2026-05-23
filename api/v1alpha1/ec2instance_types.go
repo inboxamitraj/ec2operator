@@ -23,19 +23,19 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
+// StorageSpec defines a storage volume attached to an EC2 instance.
+type StorageSpec struct {
+	Size int    `json:"size"`
+	Type string `json:"type"`
+}
+
 // EC2InstanceSpec defines the desired state of EC2Instance
 type EC2InstanceSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-	// The following markers will use OpenAPI v3 schema to validate the value
-	// More info: https://book.kubebuilder.io/reference/markers/crd-validation.html
-
-	// foo is an example field of EC2Instance. Edit ec2instance_types.go to remove/update
-	// +optional
-	// Foo *string `json:"foo,omitempty"`
-	AmiID   *string `json:"AmiID,omitempty"`
-	Type    *string `json:"Type,omitempty"`
-	Storage *string `json:"Storage,omitempty"`
+	AmiID *string `json:"AmiID,omitempty"`
+	Type *string `json:"Type,omitempty"`
+	Subnet *string `json:"Subnet,omitempty"`
+	Tags map[string]string `json:"Tags,omitempty"`
+	Storage *StorageSpec `json:"Storage,omitempty"`
 }
 
 // EC2InstanceStatus defines the observed state of EC2Instance.

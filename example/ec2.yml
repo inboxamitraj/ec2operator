@@ -1,0 +1,15 @@
+apiVersion: ec2.mycompany.io/v1alpha1
+kind: EC2Instance
+metadata:
+  name: myec2
+  namespace: default
+spec:
+  AmiID: "ami-1234567890abcdef0"
+  Type: "t3.medium"
+  Subnet: "subnet-0bb1c79de3EXAMPLE"
+  Tags:
+    environment: dev
+    owner: alice
+  Storage:
+    size: 30
+    type: gp2
