@@ -20,6 +20,7 @@ import (
 	"context"
 	"fmt"
 
+	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -57,10 +58,11 @@ func (r *EC2InstanceReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 	ec2instance := &ec2v1alpha1.EC2Instance{}
 
 	if err := r.Get(ctx, req.NamespacedName, ec2instance); err != nil {
-		if client.IgnoreNotFound(err) != nil {
+		if errors.IsNotFound(err) {
 			l.Info("EC2Instance resource not found. Ignoring since object must be deleted", "Name", req.NamespacedName)
+			return ctrl.Result{}, nil
 		}
-		return ctrl.Result{}, client.IgnoreNotFound(err)
+		return ctrl.Result{}, err
 	}
 
 	l.Info("Reconciling EC2Instance", "Name", ec2instance.Name)
