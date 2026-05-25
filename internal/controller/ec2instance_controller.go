@@ -24,7 +24,6 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
-	logf "sigs.k8s.io/controller-runtime/pkg/log"
 
 	ec2v1alpha1 "github.com/inboxamitraj/ec2operator/api/v1alpha1"
 )
@@ -49,15 +48,18 @@ type EC2InstanceReconciler struct {
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.23.3/pkg/reconcile
 func (r *EC2InstanceReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	_ = logf.FromContext(ctx)
-
-	// TODO(user): your logic here
 
 	l := log.FromContext(ctx)
+	// TODO(user): your logic here
+	l.Info("Starting reconciliation for EC2Instance", "Name", req.NamespacedName, "Request", req.Name)
+	
 
 	ec2instance := &ec2v1alpha1.EC2Instance{}
 
 	if err := r.Get(ctx, req.NamespacedName, ec2instance); err != nil {
+		if client.IgnoreNotFound(err) != nil {
+			l.Info("EC2Instance resource not found. Ignoring since object must be deleted", "Name", req.NamespacedName)
+		}
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 

@@ -59,7 +59,7 @@ type EC2InstanceStatus struct {
 	// +listMapKey=type
 	// +optional
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
-	Phase      string             `json:"phase,omitempty"`
+	Status     string             `json:"status,omitempty"`
 	InstanceID string             `json:"instanceID,omitempty"`
 }
 

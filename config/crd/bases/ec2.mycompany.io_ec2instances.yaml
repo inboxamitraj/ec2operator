@@ -139,7 +139,7 @@ spec:
                 x-kubernetes-list-type: map
               instanceID:
                 type: string
-              phase:
+              status:
                 type: string
             type: object
         required:
