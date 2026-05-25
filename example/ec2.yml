@@ -8,7 +8,7 @@ spec:
   Type: "t3.medium"
   Subnet: "subnet-0bb1c79de3EXAMPLE"
   Tags:
-    environment: dev
+    env: test
     owner: alice
   Storage:
     size: 30
