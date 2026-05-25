@@ -61,6 +61,9 @@ spec:
                 type: object
               Type:
                 type: string
+            required:
+            - AmiID
+            - Type
             type: object
           status:
             description: status defines the observed state of EC2Instance

@@ -31,8 +31,8 @@ type StorageSpec struct {
 
 // EC2InstanceSpec defines the desired state of EC2Instance
 type EC2InstanceSpec struct {
-	AmiID *string `json:"AmiID,omitempty"`
-	Type *string `json:"Type,omitempty"`
+	AmiID string `json:"AmiID"`
+	Type  string `json:"Type"`
 	Subnet *string `json:"Subnet,omitempty"`
 	Tags map[string]string `json:"Tags,omitempty"`
 	Storage *StorageSpec `json:"Storage,omitempty"`
