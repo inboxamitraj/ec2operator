@@ -53,7 +53,6 @@ func (r *EC2InstanceReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 	l := log.FromContext(ctx)
 	// TODO(user): your logic here
 	l.Info("Starting reconciliation for EC2Instance", "Name", req.NamespacedName, "Request", req.Name)
-	
 
 	ec2instance := &ec2v1alpha1.EC2Instance{}
 
@@ -65,7 +64,7 @@ func (r *EC2InstanceReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 		return ctrl.Result{}, err
 	}
 
-	l.Info("Reconciling EC2Instance", "Name", ec2instance.Name)
+	l.Info("===== Reconciling EC2Instance ====")
 
 	fmt.Println("I got a request for an ec2 instance in the namespace", req.NamespacedName)
 	fmt.Println("The ec2 instance name is ", ec2instance.Name)
@@ -77,10 +76,19 @@ func (r *EC2InstanceReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 
 	l.Info("Reconciled Ec2 Instance", "Name", ec2instance.Name)
 
-	return ctrl.Result{}, nil
-	
+	l.Info("==== Adding Finalizer ======")
+
+	ec2instance.Finalizers = append(ec2instance.Finalizers, "ec2instance.compute.cloud.com")
+	if err := r.Update(ctx, ec2instance); err != nil {
+		l.Error(err, "Failed to add Finalizer")
+		return ctrl.Result{
+			Requeue: true,
+		}, err
 	}
 
+	return ctrl.Result{}, nil
+
+}
 
 // SetupWithManager sets up the controller with the Manager.
 func (r *EC2InstanceReconciler) SetupWithManager(mgr ctrl.Manager) error {
